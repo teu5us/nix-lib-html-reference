@@ -8,7 +8,7 @@ in
 mkShell {
   buildInputs = bundle.lisp-bundle ++
                 [ bundle.copy-nix-fn-docs
-                  bundle.r-bundle
+                  pandoc
                   gnumake ];
   shellHook = ''
     [ ! -f ${toString ./qlDist.nix} ] && generate-dist
