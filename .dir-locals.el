@@ -1,4 +1,4 @@
 ;;; Directory Local Variables
 ;;; For more information see (info "(emacs) Directory Variables")
 
-((lisp-mode . ((inferior-lisp-program . "ros run"))))
+((lisp-mode . ((inferior-lisp-program . "lisp"))))
