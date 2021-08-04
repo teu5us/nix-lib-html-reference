@@ -106,9 +106,12 @@
           (format nil "
 ## ~A
 
+_~{~A~^,~^ ~}_
+
 ~@[`~A`~%~%~]~A~%
 ~@[~{~A~}~]~{~A~%~}"
                   title
+                  (mapcar #'car varlist)
                   subtitle
                   para
                   (prepare-varlist varlist)
