@@ -13,7 +13,7 @@
         (format nil "
 ## builtins.~A
 
-_~{~A~^ ~}_
+_~{~A~^,~^ ~}_
 
 ~A~%~%"
                 name
