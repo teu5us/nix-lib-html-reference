@@ -20,5 +20,9 @@ html:
 		--css=${PANDOC_THEME}/public/css/skylighting-solarized-theme.css \
 		-o doc-gen/nix-lib.html
 
+dump-builtins:
+	@mkdir -p builtins
+	@nix __dump-builtins > builtins/builtins.json
+
 clean:
-	@rm -rf xml-doc doc-gen outputs
+	@rm -rf xml-doc doc-gen outputs builtins
