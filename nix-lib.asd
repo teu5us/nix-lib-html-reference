@@ -9,6 +9,8 @@
   :depends-on (#:plump
                #:lquery
                #:cl-who
-               #:str)
+               #:str
+               #:jonathan)
   :components ((:file "package")
+               (:file "nix-builtins")
                (:file "nix-lib")))

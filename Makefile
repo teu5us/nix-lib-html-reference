@@ -1,4 +1,4 @@
-all: copy_docs md html
+all: copy_docs dump_builtins md html
 
 copy_docs:
 	@bash -x copy-nix-fn-docs
@@ -13,14 +13,14 @@ html:
 		--self-contained \
 		-s \
 		--toc \
-		--toc-depth=2 \
+		--toc-depth=3 \
 		--template=${PANDOC_TMPL} \
 		--resource-path=${PANDOC_THEME} \
 		--css=${PANDOC_THEME}/public/css/theme.css \
 		--css=${PANDOC_THEME}/public/css/skylighting-solarized-theme.css \
 		-o doc-gen/nix-lib.html
 
-dump-builtins:
+dump_builtins:
 	@mkdir -p builtins
 	@nix __dump-builtins > builtins/builtins.json
 

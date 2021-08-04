@@ -2,17 +2,18 @@
 
 with pkgs;
 
-let
-  bundle = import ./bundle.nix pkgs;
-in
+with (import ./bundle.nix pkgs);
+
 mkShell {
-  buildInputs = bundle.lisp-bundle ++
-                [ bundle.copy-nix-fn-docs
+  buildInputs = lisp-bundle ++
+                [ copy-nix-fn-docs
                   pandoc
-                  gnumake ];
+                  gnumake
+                  curl
+                ];
   shellHook = ''
     [ ! -f ${toString ./qlDist.nix} ] && generate-dist
-    export PANDOC_THEME=${bundle.pandoc-theme}
-    export PANDOC_TMPL=${bundle.pandoc-theme}/template.html5
+    export PANDOC_THEME=${pandoc-theme}
+    export PANDOC_TMPL=${pandoc-theme}/template.html5
   '';
 }

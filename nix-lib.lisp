@@ -104,7 +104,7 @@
         :collect
         (with-slots (title subtitle para varlist examples) function
           (format nil "
-## ~A
+### ~A
 
 _~{~A~^,~^ ~}_
 
@@ -119,7 +119,7 @@ _~{~A~^,~^ ~}_
 
 (defun create-md-docfile (docfile)
   (let ((doc (parse-docfile docfile)))
-    (format nil "# ~A
+    (format nil "## ~A
 
 ~{~A~}~%"
             (doc-text doc "title")
@@ -146,11 +146,11 @@ _~{~A~^,~^ ~}_
                           (ensure-directories-exist *outpath*)
                           "nix-lib.md"))
    (format nil "---
-title: Nixpkgs Library Functions
+title: Nix (builtins) & Nixpkgs (lib) Functions
 output:
   html_document:
     toc: true
-    toc_depth: 2
+    toc_depth: 3
     toc_float: true
     theme: cosmo
     highlight: pygments
@@ -158,7 +158,12 @@ output:
     self_contained: true
 ---
 
+~A
+
+# Nixpkgs Library Functions
+
 ~{~A~}
 
 Theme: [jez/pandoc-markdown-css-theme](https://github.com/jez/pandoc-markdown-css-theme)"
+           (print-builtins)
            (mapcar #'create-md-docfile (reverse *docfiles*)))))
