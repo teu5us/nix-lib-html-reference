@@ -22,6 +22,16 @@ rec {
     quicklisp-packages = [ "array-utils" ];
   };
   lisp-bundle = genLispInputs bundle-props ./qlDist.nix;
+  nixpkgs-source = fetchTarball {
+    url = "https://github.com/NixOS/nixpkgs/archive/5c37ad87222cfc1ec36d6cd1364514a9efc2f7f2.zip";
+    sha256 = "1r74afnalgcbpv7b9sbdfbnx1kfj0kp1yfa60bbbv27n36vqdhbb";
+  };
+  patch = ./docs.patch;
+  nixpkgs-patched = stdenvNoCC.mkDerivation {
+    name = "nixpkgs-for-docs";
+    src = nixpkgs-source;
+    patches = [ "${patch}" ];
+  };
   copy-nix-fn-docs = writeScriptBin "copy-nix-fn-docs" ''
     set -e
 
@@ -33,17 +43,19 @@ rec {
     [ ! -d "$out" ] && mkdir -p "$out"
 
     # build library documentation
-    cd ${pkgs.path}/doc/doc-support
+    cd ${nixpkgs-patched.outPath}/doc/doc-support
     nix-build -o "$tmp"
 
     echo "Copying library docs"
-    files=(${pkgs.path}/doc/functions/library/asserts.xml \
-           ${pkgs.path}/doc/functions/library/attrsets.xml \
+    files=(${nixpkgs-patched.outPath}/doc/functions/library/asserts.xml \
+           ${nixpkgs-patched.outPath}/doc/functions/library/attrsets.xml \
            $tmp/function-docs/strings.xml \
            $tmp/function-docs/trivial.xml \
            $tmp/function-docs/lists.xml \
            $tmp/function-docs/debug.xml \
-           $tmp/function-docs/options.xml)
+           $tmp/function-docs/options.xml \
+           $tmp/function-docs/generators.xml \
+           )
     for file in ''${files[@]}; do
       cp --no-preserve=mode --remove-destination -v -f "$file" $out/
     done
