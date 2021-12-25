@@ -47,12 +47,12 @@ rec {
     [ ! -d "$out" ] && mkdir -p "$out"
 
     # build library documentation
-    cd ${nixpkgs-patched.outPath}/doc/doc-support
+    cd ${nixpkgs-patched.outPath}/share/doc/doc-support
     nix-build -o "$tmp"
 
     echo "Copying library docs"
-    files=(${nixpkgs-patched.outPath}/doc/functions/library/asserts.xml \
-           ${nixpkgs-patched.outPath}/doc/functions/library/attrsets.xml \
+    files=(${nixpkgs-patched.outPath}/share//doc/functions/library/asserts.xml \
+           ${nixpkgs-patched.outPath}/share/doc/functions/library/attrsets.xml \
            $tmp/function-docs/strings.xml \
            $tmp/function-docs/trivial.xml \
            $tmp/function-docs/lists.xml \
