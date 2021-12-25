@@ -31,6 +31,10 @@ rec {
     name = "nixpkgs-for-docs";
     src = nixpkgs-source;
     patches = [ "${patch}" ];
+    installPhase = ''
+      mkdir -p $out
+      cp -r * $out/
+    '';
   };
   copy-nix-fn-docs = writeScriptBin "copy-nix-fn-docs" ''
     set -e
