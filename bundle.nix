@@ -31,9 +31,14 @@ rec {
     name = "nixpkgs-for-docs";
     src = nixpkgs-source;
     patches = [ "${patch}" ];
+    dontConfigure = true;
+    dontBuild = true;
+    dontFixup = true;
+    dontShrink = true;
     installPhase = ''
       mkdir -p $out
       cp -r * $out/
+      cp -r .version $out/
     '';
   };
   copy-nix-fn-docs = writeScriptBin "copy-nix-fn-docs" ''
@@ -47,18 +52,24 @@ rec {
     [ ! -d "$out" ] && mkdir -p "$out"
 
     # build library documentation
-    cd ${nixpkgs-patched.outPath}/share/doc/doc-support
+    cd ${nixpkgs-patched.outPath}/doc/doc-support
     nix-build -o "$tmp"
 
     echo "Copying library docs"
-    files=(${nixpkgs-patched.outPath}/share//doc/functions/library/asserts.xml \
-           ${nixpkgs-patched.outPath}/share/doc/functions/library/attrsets.xml \
+    files=(${nixpkgs-patched.outPath}//doc/functions/library/asserts.xml \
+           ${nixpkgs-patched.outPath}/doc/functions/library/attrsets.xml \
            $tmp/function-docs/strings.xml \
            $tmp/function-docs/trivial.xml \
            $tmp/function-docs/lists.xml \
            $tmp/function-docs/debug.xml \
            $tmp/function-docs/options.xml \
            $tmp/function-docs/generators.xml \
+           $tmp/function-docs/customisation.xml \
+           $tmp/function-docs/meta.xml \
+           $tmp/function-docs/modules.xml \
+           $tmp/function-docs/options.xml \
+           $tmp/function-docs/sources.xml \
+           $tmp/function-docs/versions.xml \
            )
     for file in ''${files[@]}; do
       cp --no-preserve=mode --remove-destination -v -f "$file" $out/

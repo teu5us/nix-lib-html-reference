@@ -125,20 +125,30 @@ _~{~A~^,~^ ~}_
             (doc-text doc "title")
             (prepare-doc doc))))
 
+;; (defmacro define-docfile (filename)
+;;   `(pushnew
+;;     ,(pathname
+;;       (concatenate 'string "./xml-doc/" filename))
+;;     *docfiles*
+;;     :test #'(lambda (p1 p2) (string= (namestring p1) (namestring p2)))))
+
 (defmacro define-docfile (filename)
   `(pushnew
-    ,(pathname
-      (concatenate 'string "./xml-doc/" filename))
+    ,filename
     *docfiles*
     :test #'(lambda (p1 p2) (string= (namestring p1) (namestring p2)))))
 
-(define-docfile "asserts.xml")
-(define-docfile "attrsets.xml")
-(define-docfile "debug.xml")
-(define-docfile "lists.xml")
-(define-docfile "options.xml")
-(define-docfile "strings.xml")
-(define-docfile "trivial.xml")
+;; (define-docfile "asserts.xml")
+;; (define-docfile "attrsets.xml")
+;; (define-docfile "debug.xml")
+;; (define-docfile "lists.xml")
+;; (define-docfile "options.xml")
+;; (define-docfile "strings.xml")
+;; (define-docfile "trivial.xml")
+;; (define-docfile "generators.xml")
+
+(dolist (file (uiop:directory-files #P"./xml-doc/"))
+  (define-docfile file))
 
 (defun output-md-docs ()
   (str:to-file

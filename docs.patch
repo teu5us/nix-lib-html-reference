@@ -1,11 +1,17 @@
 diff --git a/doc/doc-support/lib-function-docs.nix b/doc/doc-support/lib-function-docs.nix
-index f6d613ca..49797977 100644
+index f6d613ca..244d029a 100644
 --- a/doc/doc-support/lib-function-docs.nix
 +++ b/doc/doc-support/lib-function-docs.nix
-@@ -23,5 +23,6 @@ with pkgs; stdenv.mkDerivation {
+@@ -23,5 +23,12 @@ with pkgs; stdenv.mkDerivation {
      docgen debug 'Debugging functions'
      docgen options 'NixOS / nixpkgs option handling'
      docgen sources 'Source filtering functions'
-+    docgen generators 'Generators'
++    docgen generators 'Generator functions'
++    docgen customisation 'Customisation functions'
++    docgen meta 'Meta functions'
++    docgen modules 'Modules functions'
++    docgen options 'Options functions'
++    docgen sources 'Sources functions'
++    docgen versions 'Versions functions'
    '';
  }
