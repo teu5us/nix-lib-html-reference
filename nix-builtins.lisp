@@ -23,4 +23,5 @@ _~{~A~^,~^ ~}_
 (defun print-builtins ()
   (apply #'concatenate 'string
          (format nil "# Nix Builtin Functions~%")
-         (mapcar #'print-builtin *builtins*)))
+         (mapcar #'print-builtin
+                 (sort *builtins* #'string< :key #'car))))

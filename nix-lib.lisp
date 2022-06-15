@@ -100,7 +100,7 @@
 ```" (car pair) (cadr pair))))
 
 (defun prepare-doc (doc)
-  (loop :for function :in (doc-data doc)
+  (loop :for function :in (sort (doc-data doc) #'string< :key #':title)
         :collect
         (with-slots (title subtitle para varlist examples) function
           (format nil "
