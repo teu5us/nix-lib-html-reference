@@ -1,4 +1,4 @@
-pkgs:
+pkgs: nixpkgs:
 
 with pkgs;
 
@@ -22,14 +22,10 @@ rec {
     quicklisp-packages = [ "array-utils" ];
   };
   lisp-bundle = genLispInputs bundle-props ./qlDist.nix;
-  nixpkgs-source = fetchTarball {
-    url = "https://github.com/NixOS/nixpkgs/archive/5c37ad87222cfc1ec36d6cd1364514a9efc2f7f2.zip";
-    sha256 = "1r74afnalgcbpv7b9sbdfbnx1kfj0kp1yfa60bbbv27n36vqdhbb";
-  };
   patch = ./docs.patch;
   nixpkgs-patched = stdenvNoCC.mkDerivation {
     name = "nixpkgs-for-docs";
-    src = nixpkgs-source;
+    src = nixpkgs;
     patches = [ "${patch}" ];
     dontConfigure = true;
     dontBuild = true;
@@ -63,12 +59,11 @@ rec {
            $tmp/function-docs/lists.xml \
            $tmp/function-docs/debug.xml \
            $tmp/function-docs/options.xml \
+           $tmp/function-docs/sources.xml \
            $tmp/function-docs/generators.xml \
            $tmp/function-docs/customisation.xml \
            $tmp/function-docs/meta.xml \
            $tmp/function-docs/modules.xml \
-           $tmp/function-docs/options.xml \
-           $tmp/function-docs/sources.xml \
            $tmp/function-docs/versions.xml \
            )
     for file in ''${files[@]}; do

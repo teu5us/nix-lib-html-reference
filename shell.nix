@@ -1,8 +1,8 @@
-{ pkgs ? import <nixpkgs> {} }:
+{ pkgs ? import <nixpkgs> {}, nixpkgs }:
 
 with pkgs;
 
-with (import ./bundle.nix pkgs);
+with (import ./bundle.nix pkgs nixpkgs);
 
 mkShell {
   buildInputs = lisp-bundle ++
